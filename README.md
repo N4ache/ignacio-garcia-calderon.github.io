@@ -79,4 +79,4 @@ python password_analyzer.py MiContraseña123!
 
 **Ignacio García Calderón**  
 Estudiante de Ingeniería en Sistemas — UTN Rosario  
-[LinkedIn](https://linkedin.com/in/ignacio-garcia-calderon) · [GitHub](https://github.com/ignacio-garcia-calderon)
+[LinkedIn](https://www.linkedin.com/in/ignacio-garcía-calderón) · [GitHub](https://github.com/N4ache)
