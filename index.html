@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ignacio García Calderón — Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0b0d0f;
+    --bg2: #111316;
+    --bg3: #181b1f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e6df;
+    --muted: #8a8880;
+    --accent: #c8f060;
+    --accent2: #4af0a0;
+    --mono: 'DM Mono', monospace;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'Outfit', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    border-bottom: 0.5px solid var(--border);
+    background: rgba(11,13,15,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  section { padding: 7rem 3rem; max-width: 900px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding-top: 5rem; position: relative;
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-tag::before {
+    content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05; font-weight: 400; margin-bottom: 1.5rem; letter-spacing: -0.01em;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 1.1rem; color: var(--muted); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.5rem; font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    border-radius: 2px; transition: all 0.2s; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0b0d0f; border: 1px solid var(--accent);
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: transparent; color: var(--accent); }
+  .btn-outline {
+    background: transparent; color: var(--text); border: 0.5px solid var(--border2);
+  }
+  .btn-outline:hover { border-color: var(--text); }
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 3rem;
+    font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 0.7rem; text-transform: uppercase;
+  }
+  .hero-scroll::after {
+    content: ''; display: block; width: 40px; height: 0.5px; background: var(--muted);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { width: 20px; } 50% { width: 50px; }
+  }
+
+  /* SOBRE MÍ */
+  .section-label {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 0.5px; background: var(--border2); max-width: 60px;
+  }
+  h2 { font-family: var(--serif); font-size: 2.5rem; font-weight: 400; margin-bottom: 1.5rem; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-stats {
+    display: flex; flex-direction: column; gap: 1px; border: 0.5px solid var(--border);
+  }
+  .stat {
+    padding: 1.2rem 1.5rem; border-bottom: 0.5px solid var(--border);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .stat:last-child { border-bottom: none; }
+  .stat-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .stat-value { font-family: var(--serif); font-size: 1.6rem; color: var(--accent); }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); max-width: none; padding: 5rem 3rem; }
+  .skills-inner { max-width: 900px; margin: 0 auto; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px;
+    border: 0.5px solid var(--border); margin-top: 2rem;
+  }
+  .skill-card {
+    padding: 1.5rem; background: var(--bg2);
+    border-right: 0.5px solid var(--border);
+    transition: background 0.2s;
+  }
+  .skill-card:hover { background: var(--bg3); }
+  .skill-icon { font-family: var(--mono); font-size: 22px; margin-bottom: 0.8rem; color: var(--accent2); }
+  .skill-name { font-weight: 500; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .skill-level {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .skill-bar {
+    height: 2px; background: var(--border); margin-top: 0.8rem; border-radius: 1px; overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%; background: var(--accent); border-radius: 1px;
+    transition: width 1s ease;
+  }
+
+  /* PROYECTOS */
+  .projects-grid { display: grid; gap: 1px; border: 0.5px solid var(--border); margin-top: 2rem; }
+  .project-card {
+    padding: 2rem; background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card:last-child { border-bottom: none; }
+  .project-card:hover { background: var(--bg2); }
+  .project-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--accent); transform: scaleY(0);
+    transition: transform 0.3s; transform-origin: bottom;
+  }
+  .project-card:hover::before { transform: scaleY(1); }
+  .project-num {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.1em; margin-bottom: 1rem;
+  }
+  .project-title { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 0.7rem; font-weight: 400; }
+  .project-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; max-width: 560px; }
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag {
+    font-family: var(--mono); font-size: 10px; padding: 3px 8px;
+    border: 0.5px solid var(--border2); color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase; border-radius: 1px;
+  }
+  .project-status {
+    display: inline-block; margin-bottom: 1rem;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    padding: 3px 8px; border-radius: 1px; text-transform: uppercase;
+  }
+  .status-wip { background: rgba(200,240,96,0.1); color: var(--accent); border: 0.5px solid rgba(200,240,96,0.3); }
+  .status-soon { background: rgba(74,240,160,0.08); color: var(--accent2); border: 0.5px solid rgba(74,240,160,0.2); }
+
+  /* CONTACTO */
+  #contact { background: var(--bg2); max-width: none; padding: 6rem 3rem; text-align: center; }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  #contact h2 { font-size: 3rem; margin-bottom: 1rem; }
+  #contact p { color: var(--muted); margin-bottom: 2.5rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+  footer {
+    padding: 2rem 3rem; border-top: 0.5px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">igc.dev</div>
+  <div class="nav-links">
+    <a href="#about">sobre mí</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">proyectos</a>
+    <a href="#contact">contacto</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-tag">Disponible para trabajar</div>
+  <h1>Ignacio<br><em>García</em><br>Calderón</h1>
+  <p class="hero-desc">Estudiante de Ingeniería en Sistemas en la UTN Rosario. Apasionado por la tecnología, con interés en ciberseguridad y desarrollo web.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">Ver proyectos →</a>
+    <a href="#contact" class="btn btn-outline">Contacto</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<section id="about">
+  <div class="section-label">01 — sobre mí</div>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <h2>Hola, soy<br><em style="font-style:italic; color: var(--accent)">Ignacio.</em></h2>
+      <p>Me mudé desde <strong>Pergamino</strong> a Rosario para estudiar Ingeniería en Sistemas en la <strong>UTN</strong>, una de las facultades de tecnología más reconocidas del país.</p>
+      <p>Tengo conocimientos en <strong>Python, HTML, CSS y JavaScript</strong>, y estoy constantemente aprendiendo y construyendo proyectos para crecer como desarrollador.</p>
+      <p>Mi interés a largo plazo está en la <strong>ciberseguridad</strong>, aunque hoy busco cualquier oportunidad en IT que me permita ganar experiencia real en el sector.</p>
+    </div>
+    <div class="about-stats fade-in">
+      <div class="stat">
+        <span class="stat-label">Ubicación</span>
+        <span class="stat-value" style="font-size:1rem; font-family: var(--sans); color: var(--text)">Rosario, ARG</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Facultad</span>
+        <span class="stat-value" style="font-size:1rem; font-family: var(--sans); color: var(--text)">UTN FRRo</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Carrera</span>
+        <span class="stat-value" style="font-size:0.85rem; font-family: var(--sans); color: var(--text)">Ing. en Sistemas</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Interés</span>
+        <span class="stat-value" style="font-size:0.95rem; font-family: var(--sans); color: var(--accent2)">Ciberseguridad</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Estado</span>
+        <span class="stat-value" style="font-size:0.9rem; font-family: var(--sans); color: var(--accent)">Buscando trabajo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="skills">
+  <div class="skills-inner">
+    <div class="section-label">02 — tecnologías</div>
+    <h2 class="fade-in">Stack actual</h2>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-icon">Py</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-level">Intermedio</div>
+        <div class="skill-bar"><div class="skill-fill" style="width: 55%"></div></div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">&lt;/&gt;</div>
+        <div class="skill-name">HTML & CSS</div>
+        <div class="skill-level">Básico–Intermedio</div>
+        <div class="skill-bar"><div class="skill-fill" style="width: 45%"></div></div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">JS</div>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-level">Básico</div>
+        <div class="skill-bar"><div class="skill-fill" style="width: 30%"></div></div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">Git</div>
+        <div class="skill-name">Git & GitHub</div>
+        <div class="skill-level">Básico</div>
+        <div class="skill-bar"><div class="skill-fill" style="width: 25%"></div></div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">&#x1F512;</div>
+        <div class="skill-name">Ciberseguridad</div>
+        <div class="skill-level">Aprendiendo</div>
+        <div class="skill-bar"><div class="skill-fill" style="width: 15%; background: var(--accent2)"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="section-label">03 — proyectos</div>
+  <h2 class="fade-in">Lo que estoy construyendo</h2>
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-num">001</div>
+      <span class="project-status status-wip">En progreso</span>
+      <div class="project-title">Password Strength Analyzer</div>
+      <p class="project-desc">Herramienta de línea de comandos en Python que evalúa la fortaleza de contraseñas según criterios de ciberseguridad reales: longitud, entropía, caracteres especiales y comparación con listas de contraseñas filtradas.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">CLI</span>
+        <span class="tag">Ciberseguridad</span>
+        <span class="tag">GitHub</span>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <div class="project-num">002</div>
+      <span class="project-status status-soon">Próximamente</span>
+      <div class="project-title">Portfolio Personal</div>
+      <p class="project-desc">Este mismo sitio web desarrollado con HTML y CSS con detalles de interacción.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">GitHub Pages</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center">04 — contacto</div>
+    <h2 class="fade-in">Hablemos</h2>
+    <p class="fade-in">Estoy buscando mi primera experiencia en IT. Si tenés una oportunidad, una pasantía o simplemente querés conectar, escribime.</p>
+    <div class="contact-links fade-in">
+      <a href="mailto:nachogc3076@gmail.com" class="btn btn-primary">nachogc3076@gmail.com →</a>
+      <a href="https://www.linkedin.com/in/ignacio-garcía-calderón" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com/N4ache" class="btn btn-outline">GitHub</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Ignacio García Calderón — 2026</span>
+  <span>Rosario, Santa Fe. Argentina</span>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
